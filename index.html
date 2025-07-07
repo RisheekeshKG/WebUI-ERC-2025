@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>WebUI - Team Aurora</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ROSLIB from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.min.js"></script>
+
+  <!-- NippleJS from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.9.0/dist/nipplejs.min.js"></script>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <div class="logo-area">
+      <img src="https://source.unsplash.com/80x40/?technology,robotics" alt="Logo" class="logo" />
+    </div>
+    <div class="title-area">
+      <h1>Team Aurora</h1>
+    </div>
+  </div>
+  <hr class="navbar-divider" />
+
+  <!-- Status Box -->
+<div class="status-box">
+  <p>🛰️ Web Backend: <span id="web-status">Connecting...</span></p>
+  <p>🎮 Teleop Twist: <span id="twist-status">Pending...</span></p>
+</div>
+
+
+  <!-- 2x3 Camera + Data Grid -->
+  <div class="camera-grid">
+    <div>
+      <h3>Camera 1</h3>
+      <div class="cam-box"><img id="cam1" src="" alt="Camera 1" /></div>
+    </div>
+    <div>
+      <h3>Camera 2</h3>
+      <div class="cam-box"><img id="cam2" src="" alt="Camera 2" /></div>
+    </div>
+    <div>
+      <h3>Camera 3</h3>
+      <div class="cam-box"><img id="cam3" src="" alt="Camera 3" /></div>
+    </div>
+    <div>
+      <h3>Camera 4</h3>
+      <div class="cam-box"><img id="cam4" src="" alt="Camera 4" /></div>
+    </div>
+    <div>
+      <h3>LIDAR Data</h3>
+      <div class="cam-box" style="background-color: #0a0a0a; display: flex; align-items: center; justify-content: center;">
+        <canvas id="lidar-canvas" width="320" height="240" style="background:#000;"></canvas>
+      </div>
+    </div>
+    <div>
+      <h3>Terminal Output</h3>
+      <div class="cam-box" style="background-color: #000; color: #0f0; font-family: monospace; font-size: 0.9rem; padding: 10px; overflow-y: auto;">
+        <pre id="terminal-output">Initializing...</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Velocity Sliders -->
+  <div class="slider-box">
+    <label for="linear-slider">Linear Velocity: <span id="linear-val">0.5</span></label>
+    <input type="range" id="linear-slider" min="0" max="2" step="0.1" value="0.5" />
+    
+    <label for="angular-slider">Angular Velocity: <span id="angular-val">1.0</span></label>
+    <input type="range" id="angular-slider" min="0" max="3" step="0.1" value="1.0" />
+  </div>
+
+  <!-- Joystick Container -->
+  <div id="joystick-container"></div>
+
+  <!-- App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
