@@ -25,7 +25,7 @@ class FakeLidarPublisher(Node):
         scan.range_min = 0.1
         scan.range_max = 10.0
 
-        scan.ranges = [1.0, 1.2, 1.5, 1.0, 0.8, 0.7, 0.9, 1.1]
+        scan.ranges = [1.0, 1.2, 5.0, 1.0, 0.8, 0.7, 0.9, 1.1]
         scan.intensities = []
 
         self.publisher_.publish(scan)

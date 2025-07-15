@@ -1,88 +1,96 @@
-# Step 1: Source ROS 2 Jazzy Environment
+# Team Aurora ‑ ROS 2 Jazzy Web UI Setup
 
-Open a new terminal:
+These instructions get you from a blank ROS 2 Jazzy install to a running browser‑based dashboard 
 
+## 1  Source ROS 2 Jazzy
+
+```bash
 source /opt/ros/jazzy/setup.bash
+```
 
-</br>
+---
 
-# Step 2: Create a ROS 2 Workspace (if not already)
+## 2  Create a Workspace
 
-<ul><li>mkdir -p ~/ros2_ws/src</li>
-<li>cd ~/ros2_ws</li>
-<li>colcon build</li>
-<li>source install/setup.bash</li>
-</ul>
-</br>
+```bash
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+colcon build
+source install/setup.bash
+```
 
-# Step 3: Clone and Build rosbridge_suite (needed for Jazzy)
+---
 
-In the src folder:
+## 3  Add rosbridge_suite and web_video_server
 
-<li>cd ~/ros2_ws/src</li>
-<li>git clone https://github.com/RobotWebTools/rosbridge_suite.git </li>
-</br>
+```bash
+cd ~/ros2_ws/src
+git clone https://github.com/RobotWebTools/rosbridge_suite.git
+git clone -b ros2 https://github.com/RobotWebTools/web_video_server.git
 
-# Step 4: Install Dependencies for rosbridge_suite
+```
 
-<li>cd ~/ros2_ws</li>
-<li>rosdep install --from-paths src --ignore-src -r -y</li>
+Install deps & rebuild:
 
-    If rosdep throws an error, fix it with:
+```bash
+cd ~/ros2_ws
+rosdep install --from-paths src --ignore-src -r -y
+colcon build
+source install/setup.bash           # re‑source after build
+```
 
-<li>sudo apt install python3-rosdep</li>
-<li>sudo rosdep init</li>
-<li>rosdep update</li>
-</br>
+---
 
-# Step 5: Build the Workspace
+## 4  Run rosbridge WebSocket ( 1st Terminal )
 
-<li>colcon build</li>
-<li>source install/setup.bash</li>
-</br>
+make sure u are in ros workspace u created 'ros2_ws' in my case 
+```bash
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+# → “Rosbridge WebSocket server started on port 9090”
+```
 
-# Step 6: Launch rosbridge WebSocket Server
+---
 
-<li>ros2 launch rosbridge_server rosbridge_websocket_launch.xml</li>
+## 5  Run Web_video_server ( 2st Terminal )
 
-You should see output like:
+in same directory (ros2_ws) in different terminal run this 
 
-[INFO] [rosbridge_websocket]: Rosbridge WebSocket server started on port 9090
-</br>
+```bash
+ros2 run web_video_server web_video_server
 
-# Step 7: Test the ROS Topic with a Publisher (New Terminal)
+# Streams now on http://localhost:8080/stream?topic=/image_raw
 
-Open a new terminal and run:
+```
+---
 
-<li>source /opt/ros/jazzy/setup.bash</li>
-<li>ros2 topic pub /status_text std_msgs/String "data: 'Hello from ROS 2 Jazzy'" --rate 1</li>
-</br>
+## 7  Publish Laptop Webcam (`/dev/video0`) with v4l2 (3rd Terminal )
 
-# Step 8: Create a Web UI Folder
+> **Install once**  
+> `sudo apt install ros-jazzy-v4l2-camera`
 
-<li>mkdir -p ~/ros2_ws/web_ui</li>
-<li>cd ~/ros2_ws/web_ui</li>
-</br>
+```bash
+ros2 run v4l2_camera v4l2_camera_node                       
+```
+---
 
-# Step 9: Create the HTML File
+## 8  Create Web UI Folder & Clone this Repo
 
-<li>nano index.html</li>
-</br>
+```bash
+mkdir Web-UI
+cd ~/Web-UI
+git clone https://github.com/RisheekeshKG/WebUI-ERC-2025.git
+```
 
-# Step 10: Serve the HTML File (New Terminal)
+## 9  Serve the Web UI (4th Terminal)
 
-<li>cd ~/ros2_ws/web_ui</li>
-<li>python3 -m http.server 8000</li>
-</br>
+```bash
+cd ~/Web-UI
+python3 -m http.server 8000
+```
 
-# Step 11: Open the Web Interface in Browser
+Open **http://localhost:8000/index.html** ⇒ You should see:
 
-Go to this URL in your browser:
+- **Connected ✅**  
+- Live webcam image
+---
 
-http://localhost:8000/index.html
-
-✅ You should see:
-
-    “Connected!” status
-
-    The message from /status_text updating in real time

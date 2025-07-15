@@ -175,7 +175,8 @@ if (ctx) {
 
 // === Camera Streams ===
 const camTopics = {
-  cam1: '/camera/image_raw'
+  cam1: '/image_raw',
+  cam2: '/image_raw'
 };
 
 Object.entries(camTopics).forEach(([id, topic]) => {
