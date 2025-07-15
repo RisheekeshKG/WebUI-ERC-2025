@@ -94,3 +94,10 @@ Open **http://localhost:8000/index.html** ⇒ You should see:
 - Live webcam image
 ---
 
+## 9  Run the lidar.py file if u want to check fake lidar data 
+
+```bash
+python3 lidar.py
+```
+
+
